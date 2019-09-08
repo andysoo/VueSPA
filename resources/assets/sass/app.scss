@@ -1,0 +1,23 @@
+
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+
+.bs-callout h4 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+.bs-callout-danger h4 {
+  a:link,
+  a:visited {
+    color: #000000;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #ce4844;
+  }
+}
