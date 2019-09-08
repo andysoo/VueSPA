@@ -12,8 +12,10 @@ import VueRouter from 'vue-router'
 import router from './routes'
 import App from './components/App'
 
-
-
+import { ValidationProvider ,localize } from 'vee-validate/dist/vee-validate.full';
+import zh from 'vee-validate/dist/locale/zh_CN.json'
+Vue.component('ValidationProvider', ValidationProvider);
+localize('zh',zh);
 // Add the required rule
 
 /**

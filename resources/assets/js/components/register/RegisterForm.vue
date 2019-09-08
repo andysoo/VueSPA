@@ -11,16 +11,22 @@
       >用户名</label>
 
       <div class="col-md-6">
-        <input
-          id="name"
-          type="text"
-          class="form-control"
-          name="name"
-          v-model="name"
-          required
-          autofocus
+        <ValidationProvider
+          name="用户名"
+          rules="min:4"
+          v-slot="{ errors }"
         >
-
+          <input
+            id="name"
+            type="text"
+            class="form-control"
+            name="name"
+            v-model="name"
+            required
+            autofocus
+          >
+          <span style="color:red;">{{ errors[0] }}</span>
+        </ValidationProvider>
       </div>
     </div>
 
@@ -31,16 +37,21 @@
       >邮箱</label>
 
       <div class="col-md-6">
-
-        <input
-          id="email"
-          type="email"
-          class="form-control"
-          name="email"
-          v-model="email"
-          required
+        <ValidationProvider
+          name="邮箱"
+          rules="min:6|email"
+          v-slot="{ errors }"
         >
-
+          <input
+            id="email"
+            type="email"
+            class="form-control"
+            name="email"
+            required
+            v-model="email"
+          >
+          <span style="color:red;">{{ errors[0] }}</span>
+        </ValidationProvider>
       </div>
     </div>
 
@@ -51,16 +62,22 @@
       >密码</label>
 
       <div class="col-md-6">
-
-        <input
-          id="password"
-          type="password"
-          class="form-control"
-          name="password"
-          v-model="password"
-          required
+        <ValidationProvider
+          name="密码"
+          rules="min:6"
+          vid="confirmation"
+          v-slot="{ errors }"
         >
-
+          <input
+            id="password"
+            type="password"
+            class="form-control"
+            name="password"
+            v-model="password"
+            required
+          >
+          <span style="color:red;">{{ errors[0] }}</span>
+        </ValidationProvider>
       </div>
     </div>
 
@@ -71,15 +88,21 @@
       >确认密码</label>
 
       <div class="col-md-6">
-
-        <input
-          id="password-confirm"
-          type="password"
-          class="form-control"
-          name="password_confirmation"
-          required
+        <ValidationProvider
+          name="确认密码"
+          rules="confirmed:confirmation"
+          v-slot="{ errors }"
         >
-
+          <input
+            id="password-confirm"
+            type="password"
+            class="form-control"
+            name="password_confirmation"
+            v-model="confirmation"
+            required
+          >
+          <span style="color:red;">{{ errors[0] }}</span>
+        </ValidationProvider>
       </div>
     </div>
 
@@ -98,13 +121,13 @@
 
 <script>
 import axios from 'axios'
-
 export default {
   data() {
     return {
-      name: "",
+      name: '',
       password: '',
-      email: ''
+      email: '',
+      confirmation: ''
     }
   },
 
