@@ -1,34 +1,8 @@
 <template>
   <form
     class="form-horizontal"
-    @submit.prevent="register"
+    @submit.prevent="login"
   >
-
-    <div class="form-group">
-      <label
-        for="name"
-        class="col-md-4 control-label"
-      >用户名</label>
-
-      <div class="col-md-6">
-        <ValidationProvider
-          name="用户名"
-          rules="min:4"
-          v-slot="{ errors }"
-        >
-          <input
-            id="name"
-            type="text"
-            class="form-control"
-            name="name"
-            v-model="name"
-            required
-            autofocus
-          >
-          <span style="color:red;">{{ errors[0] }}</span>
-        </ValidationProvider>
-      </div>
-    </div>
 
     <div class="form-group">
       <label
@@ -82,37 +56,12 @@
     </div>
 
     <div class="form-group">
-      <label
-        for="password-confirm"
-        class="col-md-4 control-label"
-      >确认密码</label>
-
-      <div class="col-md-6">
-        <ValidationProvider
-          name="确认密码"
-          rules="confirmed:confirmation"
-          v-slot="{ errors }"
-        >
-          <input
-            id="password-confirm"
-            type="password"
-            class="form-control"
-            name="password_confirmation"
-            v-model="confirmation"
-            required
-          >
-          <span style="color:red;">{{ errors[0] }}</span>
-        </ValidationProvider>
-      </div>
-    </div>
-
-    <div class="form-group">
       <div class="col-md-6 col-md-offset-4">
         <button
           type="submit"
           class="btn btn-primary"
         >
-          注册
+          登录
         </button>
       </div>
     </div>
@@ -120,25 +69,27 @@
 </template>
 
 <script>
+import JWTToken from '../../helpers/JWT'
 export default {
   data() {
     return {
-      name: '',
       password: '',
-      email: '',
-      confirmation: ''
+      email: ''
     }
   },
 
   methods: {
-    register() {
+    login() {
       let formData = {
-        name: this.name,
+        scope: '',
         password: this.password,
-        email: this.email
+        username: this.email,
+        client_id: "2",
+        client_secret: 'f2EI87V6d5LnRCNpDEt5ckutlzoymqEElLzGt0rA',
+        grant_type: "password"
       }
-      axios.post('/api/register', formData).then(response => {
-        this.$router.push({ name: 'confirm' })
+      axios.post('/oauth/token', formData).then(response => {
+        JWTToken.setToken(response.data.access_token)
       })
     }
   }

@@ -12,9 +12,16 @@
         <li>
           <router-link
             class="navbar-link"
+            to="/login"
+          >登录</router-link>
+        </li>
+        <li>
+          <router-link
+            class="navbar-link"
             to="/register"
           >注册</router-link>
         </li>
+
       </ul>
 
     </div>
