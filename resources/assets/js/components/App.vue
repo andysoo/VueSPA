@@ -11,9 +11,19 @@
 </template>
 <script>
 import TopMenu from './common/TopMenu'
+import jwtToken from './../helpers/JWT'
+import { mapActions } from 'vuex'
 export default {
   components: {
     TopMenu
+  },
+  methods: {
+    ...mapActions('authUser', ['getAuthUser'])
+  },
+  created() {
+    if (jwtToken.getToken()) {
+      this.getAuthUser()
+    }
   }
 }
 </script>

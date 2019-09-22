@@ -8,7 +8,10 @@
         >Vue-SPA</router-link>
       </div>
 
-      <ul class="nav navbar-nav navbar-right">
+      <ul
+        class="nav navbar-nav navbar-right"
+        v-if="!authenticated"
+      >
         <li>
           <router-link
             class="navbar-link"
@@ -24,13 +27,36 @@
 
       </ul>
 
+      <ul
+        class="nav navbar-nav navbar-right"
+        v-if="authenticated"
+      >
+        <li>
+          <router-link
+            class="navbar-link"
+            to="/profile"
+          >个人中心</router-link>
+        </li>
+
+        <li>
+          <a
+            class="navbar-link"
+            href="#"
+          >退出</a>
+        </li>
+
+      </ul>
+
     </div>
   </nav>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-
+  computed: {
+    ...mapState('authUser', ['authenticated'])
+  }
 }
 </script>
 

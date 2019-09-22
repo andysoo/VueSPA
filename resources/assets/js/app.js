@@ -10,12 +10,26 @@ require('./bootstrap');
 window.Vue = require('vue');
 import VueRouter from 'vue-router'
 import router from './routes'
+import store from './store'
+import jwtToken from './helpers/JWT'
 import App from './components/App'
 
-import { ValidationProvider ,localize } from 'vee-validate/dist/vee-validate.full';
+import { ValidationProvider ,ValidationObserver,localize } from 'vee-validate/dist/vee-validate.full';
 import zh from 'vee-validate/dist/locale/zh_CN.json'
 Vue.component('ValidationProvider', ValidationProvider);
+Vue.component('ValidationObserver', ValidationObserver);
 localize('zh',zh);
+
+axios.interceptors.request.use(function(config){
+   if (jwtToken.getToken()) {
+      config.headers['Authorization']='Bearer '+jwtToken.getToken();
+   }
+   return config
+},function (error) {
+   return Promise.reject(error);
+});
+
+
 // Add the required rule
 
 /**
@@ -27,8 +41,10 @@ Vue.use(VueRouter)
 
 
 
+
 new Vue({
    el: '#app',
    router,
+   store,
    render:h=>h(App)
 });
